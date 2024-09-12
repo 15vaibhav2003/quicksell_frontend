@@ -33,10 +33,13 @@ function App() {
     setNameFilter(filterText.toLowerCase());
   };
 
-  const filteredTickets = tickets.filter(ticket => 
-    ticket.title.toLowerCase().includes(nameFilter) ||
-    users.find(user => user.id === ticket.userId)?.name.toLowerCase().includes(nameFilter)
-  );
+  const filteredTickets = tickets.filter(ticket => {
+    const user = users.find(user => user.id === ticket.userId);
+    return (
+      ticket.title.toLowerCase().includes(nameFilter) || 
+      (user && user.name.toLowerCase().includes(nameFilter))
+    );
+  });
 
   return (
     <div className="app">

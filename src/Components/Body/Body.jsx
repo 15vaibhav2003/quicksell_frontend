@@ -1,7 +1,7 @@
 import React from 'react';
 import './body.css';  // CSS for styling
 
-function Body({ tickets, groupBy, sortBy }) {
+function Body({ tickets, users, groupBy, sortBy }) {
   // Sorting tickets based on the selected `sortBy` option (e.g., priority or title)
   const sortedTickets = [...tickets].sort((a, b) => {
     if (sortBy === 'priority') {
@@ -28,14 +28,17 @@ function Body({ tickets, groupBy, sortBy }) {
         <div key={group} className="kanban-column">
           <h2 className="kanban-column-title">{group}</h2>
           <div className="kanban-column-cards">
-            {groupedTickets[group].map((ticket) => (
-              <div key={ticket.id} className="kanban-card">
-                <h3 className="ticket-title">{ticket.title}</h3>
-                <p className="ticket-priority">Priority: {ticket.priority}</p>
-                <p className="ticket-status">Status: {ticket.status}</p>
-                <p className="ticket-user">User: {ticket.user}</p>
-              </div>
-            ))}
+            {groupedTickets[group].map((ticket) => {
+              const user = users.find(user => user.id === ticket.userId);
+              return (
+                <div key={ticket.id} className="kanban-card">
+                  <h3 className="ticket-title">{ticket.title}</h3>
+                  <p className="ticket-priority">Priority: {ticket.priority}</p>
+                  <p className="ticket-status">Status: {ticket.status}</p>
+                  <p className="ticket-user">User: {user ? user.name : 'Unknown'}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       ))}

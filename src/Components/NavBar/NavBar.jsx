@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './navbar.css';
 
-function NavBar({ handleGroupChange, handleSortChange }) {
+function NavBar({ handleGroupChange, handleSortChange, handleNameFilter }) {
   const [groupOption, setGroupOption] = useState('status');
   const [sortOption, setSortOption] = useState('priority');
   const [isDisplayDropdownOpen, setIsDisplayDropdownOpen] = useState(false);
@@ -60,8 +60,13 @@ function NavBar({ handleGroupChange, handleSortChange }) {
         {isFilterDropdownOpen && (
           <div className="dropdown-content">
             <div className="dropdown-section">
-              <label htmlFor="filter">Filter:</label>
-              <input type="text" id="filter" placeholder="Enter filter criteria" />
+              <label htmlFor="filter">Filter by Name:</label>
+              <input 
+                type="text" 
+                id="filter" 
+                placeholder="Enter name to filter" 
+                onChange={(e) => handleNameFilter(e.target.value)} // Call the name filter function
+              />
             </div>
           </div>
         )}
